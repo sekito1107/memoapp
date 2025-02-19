@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
-function App() {
+export default function App() {
+  const [memoList, setMemoList] = useState([]);
+
+  function handleAddMemo() {
+    const newMemo = {id: Date.new, text: "新規メモ"}
+    const updatedMemos = [...memoList, newMemo]
+
+    setMemoList(updatedMemos)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>メモ一覧</h1>
+      <ul>
+        {memoList.map(memo =>
+          <li>{memo.text}</li>
+        )}
+      </ul>
+      <button onClick={handleAddMemo}>+</button>
+    </>
   );
 }
-
-export default App;
