@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 
 export default function App() {
   const [memoList, setMemoList] = useState([]);
+  const [editingMemo, setEditingMemo] = useState();
+  let editingText = "";
 
   useEffect(() => {
     const savedMemo = JSON.parse(localStorage.getItem("memos")) || [];
@@ -14,11 +16,28 @@ export default function App() {
 
     setMemoList(prev => {
       const updatedMemos = [...prev, newMemo];
-      localStorage.setItem("memos", JSON.stringify(updatedMemos))
+      localStorage.setItem("memos", JSON.stringify(updatedMemos));
+      setEditingMemo(updatedMemos.find(memo => memo.id === newMemo.id));
       return updatedMemos;
     });
   }
 
+  function handleEditChange(e) {
+    editingText = e.target.value;
+  }
+
+  function handleUpdateMemo() {
+    setMemoList((prev) => {
+      const updatedMemos = prev.map((memo) =>
+        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo
+      );
+  
+      localStorage.setItem("memos", JSON.stringify(updatedMemos));
+      return updatedMemos;
+    });
+  
+    setEditingMemo(false);
+  }
   return (
     <>
       <h1>メモ一覧</h1>
@@ -28,6 +47,12 @@ export default function App() {
         )}
       </ul>
       <button onClick={handleAddMemo}>+</button>
+      {editingMemo &&
+        <>
+          <textarea onChange={handleEditChange}>{editingMemo.text}</textarea>
+          <button onClick={handleUpdateMemo}>更新</button>
+        </>
+      }
     </>
   );
 }
