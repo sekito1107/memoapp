@@ -1,5 +1,60 @@
+/* アプリ全体のレイアウト */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+/* メモ一覧 */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-width: 600px; /* 最大幅を指定して、横に広がりすぎないようにする */
+  width: 100%;
+}
+
+/* メモの項目 */
+li {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
 .selected {
-  background-color: #d0f0ff; /* 淡い青色で選択中を強調 */
-  border: 2px solid #007bff; /* 青い枠線を追加 */
-  font-weight: bold; /* 文字を太字に */
+  background-color: #ffd700; /* 強調表示 */
+}
+
+/* 編集フォーム */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* 要素間の間隔 */
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* ボタンのスタイル */
+button {
+  padding: 10px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+textarea {
+  height: 150px;
 }

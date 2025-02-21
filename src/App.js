@@ -54,7 +54,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <div className="app-container">
       <h1>メモ一覧</h1>
       <ul>
         {memoList.map(memo =>
@@ -67,7 +67,7 @@ export default function App() {
       </ul>
       <button onClick={handleAddMemo}>+</button>
       {editingMemo &&
-        <>
+        <div className="form-container">
           <textarea
             defaultValue={editingMemo.text} 
             ref={(element) => element && (element.value = editingTextRef.current)}
@@ -75,8 +75,8 @@ export default function App() {
           />
           <button onClick={handleUpdateMemo}>更新</button>
           <button onClick={handleDeleteMemo}>削除</button>
-        </>
+        </div>
       }
-    </>
+    </div>
   );
 }
