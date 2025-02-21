@@ -25,17 +25,25 @@ export default function App() {
       setEditingMemo(newMemo)
   }
 
-  function handleEditChange(e) {
+  function handleTextChange(e) {
     editingText = e.target.value;
   }
 
   function handleUpdateMemo() {
-    setMemoList((prev) => {
-      return prev.map((memo) =>
+    setMemoList((prev) => 
+      prev.map((memo) =>
         memo.id === editingMemo.id ? {...memo, text: editingText} : memo
+      )
     );
-    })
   
+    setEditingMemo(null);
+  }
+
+  function handleDeleteMemo() {
+    setMemoList((prev) => 
+      prev.filter((memo) => editingMemo.id !== memo.id)
+    );
+
     setEditingMemo(null);
   }
 
@@ -50,8 +58,9 @@ export default function App() {
       <button onClick={handleAddMemo}>+</button>
       {editingMemo &&
         <>
-          <textarea onChange={handleEditChange}>{editingMemo.text}</textarea>
+          <textarea onChange={handleTextChange}>{editingMemo.text}</textarea>
           <button onClick={handleUpdateMemo}>更新</button>
+          <button onClick={handleDeleteMemo}>削除</button>
         </>
       }
     </>
