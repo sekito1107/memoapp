@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 export default function App() {
   const [memoList, setMemoList] = useState([]);
-  const [editingMemo, setEditingMemo] = useState();
+  const [editingMemo, setEditingMemo] = useState(null);
   let editingText = "";
 
   useEffect(() => {
@@ -11,15 +11,18 @@ export default function App() {
     setMemoList(savedMemo);
   },[])
 
+  useEffect(() => {
+    if (memoList.length > 0) {
+      localStorage.setItem("memos", JSON.stringify(memoList));
+    }
+  }, [memoList]);
+
   function handleAddMemo() {
     const newMemo = {id: Date.now(), text: "新規メモ"}
-
-    setMemoList(prev => {
-      const updatedMemos = [...prev, newMemo];
-      localStorage.setItem("memos", JSON.stringify(updatedMemos));
-      setEditingMemo(updatedMemos.find(memo => memo.id === newMemo.id));
-      return updatedMemos;
-    });
+      setMemoList(prev => 
+        [...prev, newMemo]
+      )
+      setEditingMemo(newMemo)
   }
 
   function handleEditChange(e) {
@@ -28,16 +31,14 @@ export default function App() {
 
   function handleUpdateMemo() {
     setMemoList((prev) => {
-      const updatedMemos = prev.map((memo) =>
-        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo
-      );
+      return prev.map((memo) =>
+        memo.id === editingMemo.id ? {...memo, text: editingText} : memo
+    );
+    })
   
-      localStorage.setItem("memos", JSON.stringify(updatedMemos));
-      return updatedMemos;
-    });
-  
-    setEditingMemo(false);
+    setEditingMemo(null);
   }
+
   return (
     <>
       <h1>メモ一覧</h1>
