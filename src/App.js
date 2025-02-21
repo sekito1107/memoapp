@@ -52,7 +52,7 @@ export default function App() {
       <h1>メモ一覧</h1>
       <ul>
         {memoList.map(memo =>
-          <li key={memo.id}>{memo.text}</li>
+          <li key={memo.id}>{memo.text.split("\n")[0]}</li>
         )}
       </ul>
       <button onClick={handleAddMemo}>+</button>
