@@ -1,7 +1,7 @@
 ### インストール & 実行方法
 
 1. git clone https://github.com/sekito1107/memoapp
-2. cd memo-app
+2. cd memoapp
 3. npm install
 4. npm start
 
