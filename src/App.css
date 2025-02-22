@@ -21,7 +21,7 @@ li {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-  width:200px;
+  width: 200px;
 }
 
 .selected {
@@ -40,7 +40,7 @@ li {
 button {
   padding: 10px;
   border: none;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   font-size: 16px;
   border-radius: 5px;
