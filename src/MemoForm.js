@@ -3,13 +3,12 @@ export default function MemoForm({
   handleTextChange,
   handleUpdateMemo,
   handleDeleteMemo,
-  editingTextRef,
 }) {
   return (
     <div>
       <textarea
         defaultValue={editingMemo.text}
-        ref={(element) => element && (element.value = editingTextRef.current)}
+        ref={(element) => element && (element.value = editingMemo.text)}
         onChange={handleTextChange}
       />
       <button onClick={handleUpdateMemo}>更新</button>

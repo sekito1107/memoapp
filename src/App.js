@@ -1,12 +1,11 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import MemoList from "./MemoList";
 import MemoForm from "./MemoForm";
 
 export default function App() {
   const [memoList, setMemoList] = useState([]);
   const [editingMemo, setEditingMemo] = useState(null);
-  const editingTextRef = useRef("");
 
   useEffect(() => {
     const savedMemo = JSON.parse(localStorage.getItem("memos")) || [];
@@ -23,20 +22,15 @@ export default function App() {
     const newMemo = { id: Date.now(), text: "新規メモ" };
     setMemoList((prev) => [...prev, newMemo]);
     setEditingMemo(newMemo);
-    editingTextRef.current = newMemo.text;
   }
 
   function handleTextChange(e) {
-    editingTextRef.current = e.target.value;
+    setEditingMemo((prev) => ({...prev, text: e.target.value}))
   }
 
   function handleUpdateMemo() {
     setMemoList((prev) =>
-      prev.map((memo) =>
-        memo.id === editingMemo.id
-          ? { ...memo, text: editingTextRef.current }
-          : memo,
-      ),
+      prev.map((memo) => (memo.id === editingMemo.id ? editingMemo : memo))
     );
     setEditingMemo(null);
   }
@@ -48,7 +42,6 @@ export default function App() {
 
   function startEditingMemo(memo) {
     setEditingMemo(memo);
-    editingTextRef.current = memo.text;
   }
 
   return (
@@ -62,7 +55,6 @@ export default function App() {
       {editingMemo && (
         <MemoForm
           editingMemo={editingMemo}
-          editingTextRef={editingTextRef}
           handleTextChange={handleTextChange}
           handleUpdateMemo={handleUpdateMemo}
           handleDeleteMemo={handleDeleteMemo}
