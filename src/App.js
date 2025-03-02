@@ -24,13 +24,11 @@ export default function App() {
     setEditingMemo(newMemo);
   }
 
-  function handleTextChange(e) {
-    setEditingMemo((prev) => ({...prev, text: e.target.value}))
-  }
-
-  function handleUpdateMemo() {
+  function handleUpdateMemo(editingText) {
     setMemoList((prev) =>
-      prev.map((memo) => (memo.id === editingMemo.id ? editingMemo : memo))
+      prev.map((memo) =>
+        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo
+      )
     );
     setEditingMemo(null);
   }
@@ -54,8 +52,8 @@ export default function App() {
       <button onClick={handleAddMemo}>+</button>
       {editingMemo && (
         <MemoForm
+          key={editingMemo.id}
           editingMemo={editingMemo}
-          handleTextChange={handleTextChange}
           handleUpdateMemo={handleUpdateMemo}
           handleDeleteMemo={handleDeleteMemo}
         />
