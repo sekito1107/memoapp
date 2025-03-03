@@ -13,12 +13,17 @@ export default function MemoForm({
   return (
     <div>
       <textarea
+        name="memoform"
         defaultValue={editingText}
         onChange={(e) => setEditingText(e.target.value)}
         readOnly={!isLogin}
       />
-      <button onClick={() => handleUpdateMemo(editingText)}>更新</button>
-      <button onClick={handleDeleteMemo}>削除</button>
+      {isLogin && (
+        <div>
+          <button onClick={() => handleUpdateMemo(editingText)}>更新</button>
+          <button onClick={handleDeleteMemo}>削除</button>
+        </div>
+      )}
     </div>
   );
 }
