@@ -29,8 +29,8 @@ export default function App() {
   function handleUpdateMemo(editingText) {
     setMemoList((prev) =>
       prev.map((memo) =>
-        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo
-      )
+        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo,
+      ),
     );
     setEditingMemo(null);
   }
