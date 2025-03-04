@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { AuthProvider } from "./hooks/AuthHooks.js";
 import MemoList from "./MemoList";
 import MemoForm from "./MemoForm";
+import LoginButton from "./LoginButton";
 
 export default function App() {
   const [memoList, setMemoList] = useState([]);
@@ -27,8 +29,8 @@ export default function App() {
   function handleUpdateMemo(editingText) {
     setMemoList((prev) =>
       prev.map((memo) =>
-        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo
-      )
+        memo.id === editingMemo.id ? { ...memo, text: editingText } : memo,
+      ),
     );
     setEditingMemo(null);
   }
@@ -43,21 +45,24 @@ export default function App() {
   }
 
   return (
-    <div className="app-container">
-      <MemoList
-        memoList={memoList}
-        startEditingMemo={startEditingMemo}
-        editingMemo={editingMemo}
-      />
-      <button onClick={handleAddMemo}>+</button>
-      {editingMemo && (
-        <MemoForm
-          key={editingMemo.id}
+    <AuthProvider>
+      <div className="app-container">
+        <LoginButton />
+        <MemoList
+          memoList={memoList}
+          startEditingMemo={startEditingMemo}
           editingMemo={editingMemo}
-          handleUpdateMemo={handleUpdateMemo}
-          handleDeleteMemo={handleDeleteMemo}
         />
-      )}
-    </div>
+        <button onClick={handleAddMemo}>+</button>
+        {editingMemo && (
+          <MemoForm
+            key={editingMemo.id}
+            editingMemo={editingMemo}
+            handleUpdateMemo={handleUpdateMemo}
+            handleDeleteMemo={handleDeleteMemo}
+          />
+        )}
+      </div>
+    </AuthProvider>
   );
 }
